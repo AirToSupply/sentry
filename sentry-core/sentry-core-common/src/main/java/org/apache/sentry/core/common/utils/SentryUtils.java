@@ -27,12 +27,6 @@ import java.util.List;
 public final class SentryUtils {
 
   /**
-   * Given a list of sorted numbers, return the string that prints in the collapsed format.
-   * <p>
-   * e.g:
-   * <li> Input: [1, 2, 3, 5, 7] </li>
-   * <li> Output: "[1-3, 5, 7]" </li>
-   * </p>
    * @param nums List of sorted numbers
    * @return Collapsed string representation of the numbers
    */

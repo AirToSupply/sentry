@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.security.auth.login.LoginException;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.conf.HiveConf;
@@ -54,8 +55,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SentrySyncHMSNotificationsPostEventListener extends MetaStoreEventListener {
 
-  private static final Logger LOGGER = LoggerFactory
-      .getLogger(SentrySyncHMSNotificationsPostEventListener.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SentrySyncHMSNotificationsPostEventListener.class);
 
   private final HiveAuthzConf authzConf;
   private final String serverName;
@@ -82,11 +82,19 @@ public class SentrySyncHMSNotificationsPostEventListener extends MetaStoreEventL
   public SentrySyncHMSNotificationsPostEventListener(Configuration config) {
     super(config);
 
+    /*
+    LOGGER.error("-----------------------------------");
+    LOGGER.error(config.getClass().getName());
+    LOGGER.error(HiveConf.class.getName());
+    LOGGER.error("-----------------------------------");
+    */
+
+    /*
     if (!(config instanceof HiveConf)) {
       String error = "Could not initialize Plugin - Configuration is not an instanceof HiveConf";
       LOGGER.error(error);
       throw new RuntimeException(error);
-    }
+    }*/
 
     authzConf = HiveAuthzConf.getAuthzConf((HiveConf) config);
     serverName = getServerName();

@@ -78,8 +78,10 @@ public final class SentryTransportFactory implements TransportFactory {
 
   /**
    * Connect to the endpoint and return a connected Thrift transport.
+   *
+   * @param endpoint endpoint
    * @return Connection to the endpoint
-   * @throws IOException
+   * @throws IOException IOException
    */
   @Override
   public TTransportWrapper getTransport(HostAndPort endpoint) throws Exception {

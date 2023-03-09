@@ -37,16 +37,16 @@ public class SentryJSONAlterPartitionMessage extends JSONAlterPartitionMessage {
   }
 
   public SentryJSONAlterPartitionMessage(String server, String servicePrincipal, Table tableObj,
-      Partition partitionObjBefore, Partition partitionObjAfter, Long timestamp) {
-    this(server, servicePrincipal, tableObj, partitionObjBefore, partitionObjAfter, timestamp,
+      Partition partitionObjBefore, Partition partitionObjAfter, boolean isTruncateOp, Long timestamp) {
+    this(server, servicePrincipal, tableObj, partitionObjBefore, partitionObjAfter, isTruncateOp, timestamp,
         partitionObjBefore.getSd().getLocation(), partitionObjAfter.getSd().getLocation(),
         partitionObjAfter.getValues());
   }
 
   public SentryJSONAlterPartitionMessage(String server, String servicePrincipal, Table tableObj,
-      Partition partitionObjBefore, Partition partitionObjAfter, Long timestamp, String oldLocation,
+      Partition partitionObjBefore, Partition partitionObjAfter, boolean isTruncateOp, Long timestamp, String oldLocation,
       String newLocation, List<String> newValues) {
-    super(server, servicePrincipal, tableObj, partitionObjBefore, partitionObjAfter, timestamp);
+    super(server, servicePrincipal, tableObj, partitionObjBefore, partitionObjAfter, isTruncateOp, timestamp);
     this.newLocation = newLocation;
     this.oldLocation = oldLocation;
     this.newValues = newValues;

@@ -21,30 +21,20 @@ package org.apache.sentry.binding.metastore.messaging.json;
 import com.google.common.collect.Lists;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hadoop.hive.metastore.api.Database;
-import org.apache.hadoop.hive.metastore.api.Function;
-import org.apache.hadoop.hive.metastore.api.Index;
-import org.apache.hadoop.hive.metastore.api.Partition;
-import org.apache.hadoop.hive.metastore.api.Table;
+import org.apache.hadoop.hive.metastore.api.*;
+// import org.apache.hadoop.hive.metastore.api.Index;
 
 import java.util.*;
-import org.apache.hadoop.hive.metastore.messaging.AddPartitionMessage;
-import org.apache.hadoop.hive.metastore.messaging.AlterIndexMessage;
-import org.apache.hadoop.hive.metastore.messaging.CreateFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.CreateIndexMessage;
-import org.apache.hadoop.hive.metastore.messaging.DropFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.DropIndexMessage;
-import org.apache.hadoop.hive.metastore.messaging.DropPartitionMessage;
-import org.apache.hadoop.hive.metastore.messaging.DropTableMessage;
-import org.apache.hadoop.hive.metastore.messaging.InsertMessage;
-import org.apache.hadoop.hive.metastore.messaging.MessageDeserializer;
-import org.apache.hadoop.hive.metastore.messaging.MessageFactory;
-import org.apache.hadoop.hive.metastore.messaging.PartitionFiles;
-import org.apache.hadoop.hive.metastore.messaging.json.JSONAlterIndexMessage;
+
+import org.apache.hadoop.hive.metastore.messaging.*;
+// import org.apache.hadoop.hive.metastore.messaging.AlterIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.CreateIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.DropIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.json.JSONAlterIndexMessage;
 import org.apache.hadoop.hive.metastore.messaging.json.JSONCreateFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.json.JSONCreateIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.json.JSONCreateIndexMessage;
 import org.apache.hadoop.hive.metastore.messaging.json.JSONDropFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.json.JSONDropIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.json.JSONDropIndexMessage;
 import org.apache.hadoop.hive.metastore.messaging.json.JSONInsertMessage;
 
 public class SentryJSONMessageFactory extends MessageFactory {
@@ -85,8 +75,13 @@ public class SentryJSONMessageFactory extends MessageFactory {
 
   @Override
   public SentryJSONCreateDatabaseMessage buildCreateDatabaseMessage(Database db) {
-    return new SentryJSONCreateDatabaseMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, db.getName(),
+    return new SentryJSONCreateDatabaseMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, db,
         now(), db.getLocationUri());
+  }
+
+  @Override
+  public AlterDatabaseMessage buildAlterDatabaseMessage(Database database, Database database1) {
+    return null;
   }
 
   @Override
@@ -104,9 +99,16 @@ public class SentryJSONMessageFactory extends MessageFactory {
   }
 
   @Override
+  public AlterTableMessage buildAlterTableMessage(Table before, Table after, boolean isTruncateOp) {
+    return new SentryJSONAlterTableMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, before, after, isTruncateOp, now());
+  }
+
+  /*
+  @Override
   public SentryJSONAlterTableMessage buildAlterTableMessage(Table before, Table after) {
     return new SentryJSONAlterTableMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, before, after, now());
   }
+  */
 
   @Override
   public DropTableMessage buildDropTableMessage(Table table) {
@@ -115,11 +117,19 @@ public class SentryJSONMessageFactory extends MessageFactory {
   }
 
   @Override
+  public AlterPartitionMessage buildAlterPartitionMessage(Table table, Partition before, Partition after, boolean isTruncateOp) {
+    return new SentryJSONAlterPartitionMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL,
+        table, before, after, isTruncateOp, now());
+  }
+
+  /*
+  @Override
   public SentryJSONAlterPartitionMessage buildAlterPartitionMessage(Table table,
       Partition before, Partition after) {
     return new SentryJSONAlterPartitionMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL,
         table, before, after, now());
   }
+  */
 
   @Override
   public DropPartitionMessage buildDropPartitionMessage(Table table, Iterator<Partition> partitions) {
@@ -146,6 +156,69 @@ public class SentryJSONMessageFactory extends MessageFactory {
 
   }
 
+
+
+  @Override
+  public OpenTxnMessage buildOpenTxnMessage(Long aLong, Long aLong1) {
+    return null;
+  }
+
+  @Override
+  public CommitTxnMessage buildCommitTxnMessage(Long aLong) {
+    return null;
+  }
+
+  @Override
+  public AbortTxnMessage buildAbortTxnMessage(Long aLong) {
+    return null;
+  }
+
+  @Override
+  public AllocWriteIdMessage buildAllocWriteIdMessage(List<TxnToWriteId> list, String s, String s1) {
+    return null;
+  }
+
+  @Override
+  public AddPrimaryKeyMessage buildAddPrimaryKeyMessage(List<SQLPrimaryKey> list) {
+    return null;
+  }
+
+  @Override
+  public AddForeignKeyMessage buildAddForeignKeyMessage(List<SQLForeignKey> list) {
+    return null;
+  }
+
+  @Override
+  public AddUniqueConstraintMessage buildAddUniqueConstraintMessage(List<SQLUniqueConstraint> list) {
+    return null;
+  }
+
+  @Override
+  public AddNotNullConstraintMessage buildAddNotNullConstraintMessage(List<SQLNotNullConstraint> list) {
+    return null;
+  }
+
+  @Override
+  public DropConstraintMessage buildDropConstraintMessage(String s, String s1, String s2) {
+    return null;
+  }
+
+  @Override
+  public CreateCatalogMessage buildCreateCatalogMessage(Catalog catalog) {
+    return null;
+  }
+
+  @Override
+  public DropCatalogMessage buildDropCatalogMessage(Catalog catalog) {
+    return null;
+  }
+
+  @Override
+  public AlterCatalogMessage buildAlterCatalogMessage(Catalog catalog, Catalog catalog1) {
+    return null;
+  }
+
+  /*
   @Override
   public CreateIndexMessage buildCreateIndexMessage(Index index) {
     // Sentry would be not be interested in CreateIndexMessage as these are generated when is data is
@@ -153,7 +226,9 @@ public class SentryJSONMessageFactory extends MessageFactory {
     // JSON class is not defined for CreateIndexMessage
     return new JSONCreateIndexMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, index, now());
   }
+  */
 
+  /*
   @Override
   public DropIndexMessage buildDropIndexMessage(Index index) {
     // Sentry would be not be interested in DropIndexMessage as these are generated when is data is
@@ -161,7 +236,9 @@ public class SentryJSONMessageFactory extends MessageFactory {
     // JSON class is not defined for DropIndexMessage
     return new JSONDropIndexMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, index, now());
   }
+  */
 
+  /*
   @Override
   public AlterIndexMessage buildAlterIndexMessage(Index before, Index after) {
     // Sentry would be not be interested in AlterIndexMessage as these are generated when is data is
@@ -169,7 +246,15 @@ public class SentryJSONMessageFactory extends MessageFactory {
     // JSON class is not defined for AlterIndexMessage
     return new JSONAlterIndexMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, before, after, now());
   }
+  */
 
+  @Override
+  public InsertMessage buildInsertMessage(Table tableObj, Partition ptnObj, boolean replace, Iterator<String> files) {
+    return new JSONInsertMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, tableObj, ptnObj, replace, files, now());
+  }
+
+
+  /*
   @Override
   public InsertMessage buildInsertMessage(String db, String table, Map<String, String> partKeyVals,
       Iterator<String> fileIter) {
@@ -179,6 +264,7 @@ public class SentryJSONMessageFactory extends MessageFactory {
     return new JSONInsertMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, db, table, partKeyVals,
         fileIter, now());
   }
+  */
 
   @Override
   public AddPartitionMessage buildAddPartitionMessage(Table table,

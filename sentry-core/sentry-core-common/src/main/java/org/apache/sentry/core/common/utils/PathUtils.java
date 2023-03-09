@@ -166,6 +166,12 @@ public class PathUtils {
   /**
    * Parse a URI which can be HDFS, S3, SWIFT, WEBHDFS,etc. In either case it
    * should be on the same fs as the warehouse directory.
+   *
+   * @param warehouseDir warehouseDir
+   * @param uri uri
+   * @param isLocal isLocal
+   * @return return
+   * @throws URISyntaxException URISyntaxException
    */
   public static String parseURI(String warehouseDir, String uri, boolean isLocal)
       throws URISyntaxException {
@@ -210,7 +216,6 @@ public class PathUtils {
     }
     return uriPath.toUri().toString();
   }
-
   /**
    * Split path into elements.
    * May evolve to do something smarter, e.g. path canonicalization,
@@ -219,6 +224,9 @@ public class PathUtils {
    * Remove leading, following, and consecutive slashes from path so
    * input like "//a/b//c///" when split gives
    * {a,b,c} instead of {"","",a,b,"",c,"","",""}
+   *
+   * @param path path
+   * @return return
    */
   public static String[] splitPath(String path) {
     path = path.replaceAll("(^/+)|(/+$)", "");

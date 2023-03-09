@@ -26,14 +26,18 @@ public abstract class BitFieldActionFactory {
    * Get BitFieldAction list by the given action code.
    * Take the Solr for example, the ALL action code is 0x0003, two bits are set.
    * The return BitFieldAction list are UPDATE action(0x0001) and QUERY action(0x0002)
-   * @param actionCode
+   * @param actionCode actionCode
    * @return The BitFieldAction List
+   * @throws SentryUserException SentryUserException
    */
   public abstract List<? extends BitFieldAction> getActionsByCode(int actionCode) throws SentryUserException;
   /**
    * Get the BitFieldAction from the given name
-   * @param name
-   * @return
+   *
+   * @param name name
+   * @return return
+   *
+   * @throws SentryUserException SentryUserException
    */
   public abstract BitFieldAction getActionByName(String name) throws SentryUserException;
 }

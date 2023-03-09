@@ -21,13 +21,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+// import org.apache.hadoop.hive.metastore.api.ColumnStatisticsObj;
 import org.apache.hadoop.hive.metastore.api.FieldSchema;
 import org.apache.hadoop.hive.ql.DriverContext;
 import org.apache.hadoop.hive.ql.ErrorMsg;
 import org.apache.hadoop.hive.ql.metadata.Hive;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.metadata.Table;
-import org.apache.hadoop.hive.ql.metadata.formatting.MetaDataFormatUtils;
+// import org.apache.hadoop.hive.ql.metadata.formatting.MetaDataFormatUtils;
+import org.apache.hadoop.hive.ql.metadata.formatting.MetaDataFormatUtilsWithHive2;
 import org.apache.hadoop.hive.ql.plan.HiveOperation;
 import org.apache.hadoop.hive.ql.plan.ShowColumnsDesc;
 import org.apache.hadoop.hive.ql.session.SessionState;
@@ -118,7 +120,11 @@ public class SentryFilterDDLTask extends DDLTask {
       // In case the query is served by HiveServer2, don't pad it with spaces,
       // as HiveServer2 output is consumed by JDBC/ODBC clients.
       boolean isOutputPadded = !SessionState.get().isHiveServerQuery();
+      /*
       outStream.writeBytes(MetaDataFormatUtils.getAllColumnsInformation(
+          fiterColumns(cols, table), false, isOutputPadded, null));
+      */
+      outStream.writeBytes(MetaDataFormatUtilsWithHive2.getAllColumnsInformation(
           fiterColumns(cols, table), false, isOutputPadded, null));
       outStream.close();
       outStream = null;
@@ -148,7 +154,7 @@ public class SentryFilterDDLTask extends DDLTask {
     feedSubscribers = ddlTask.getFeedSubscribers();
     taskTag = ddlTask.getTaskTag();
     setLocalMode(ddlTask.isLocalMode());
-    setRetryCmdWhenFail(ddlTask.ifRetryCmdWhenFail());
+    // setRetryCmdWhenFail(ddlTask.ifRetryCmdWhenFail());
     queryPlan = ddlTask.getQueryPlan();
     jobID = ddlTask.getJobID();
     setException(ddlTask.getException());
@@ -161,4 +167,5 @@ public class SentryFilterDDLTask extends DDLTask {
     clonedConf = ddlTask.clonedConf;
     queryDisplay = ddlTask.queryDisplay;
   }
+
 }

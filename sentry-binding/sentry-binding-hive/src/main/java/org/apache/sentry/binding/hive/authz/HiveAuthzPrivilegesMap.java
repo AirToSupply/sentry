@@ -81,6 +81,7 @@ public class HiveAuthzPrivilegesMap {
         setOperationScope(HiveOperationScope.TABLE).
         setOperationType(HiveOperationType.DDL).
         build();
+    /*
     HiveAuthzPrivileges indexTablePrivilege = new HiveAuthzPrivileges.AuthzPrivilegeBuilder().
         addInputObjectPriviledge(AuthorizableType.Table, EnumSet.of(DBModelAction.INDEX)).
         //Only used for create index location
@@ -88,6 +89,7 @@ public class HiveAuthzPrivilegesMap {
         setOperationScope(HiveOperationScope.TABLE).
         setOperationType(HiveOperationType.DDL).
         build();
+     */
 
     HiveAuthzPrivileges alterTableAndUriPrivilege = new HiveAuthzPrivileges.AuthzPrivilegeBuilder().
         addOutputObjectPriviledge(AuthorizableType.Table, EnumSet.of(DBModelAction.ALTER)).
@@ -258,10 +260,10 @@ public class HiveAuthzPrivilegesMap {
     hiveAuthzStmtPrivMap.put(HiveOperation.DROPTABLE, dropTablePrivilege);
     hiveAuthzStmtPrivMap.put(HiveOperation.CREATEVIEW, createViewPrivilege);
     hiveAuthzStmtPrivMap.put(HiveOperation.DROPVIEW, dropTablePrivilege);
-    hiveAuthzStmtPrivMap.put(HiveOperation.CREATEINDEX, indexTablePrivilege);
-    hiveAuthzStmtPrivMap.put(HiveOperation.DROPINDEX, indexTablePrivilege);
-    hiveAuthzStmtPrivMap.put(HiveOperation.ALTERINDEX_PROPS, indexTablePrivilege);//TODO: Needs test case
-    hiveAuthzStmtPrivMap.put(HiveOperation.ALTERINDEX_REBUILD, indexTablePrivilege);
+    // hiveAuthzStmtPrivMap.put(HiveOperation.CREATEINDEX, indexTablePrivilege);
+    // hiveAuthzStmtPrivMap.put(HiveOperation.DROPINDEX, indexTablePrivilege);
+    // hiveAuthzStmtPrivMap.put(HiveOperation.ALTERINDEX_PROPS, indexTablePrivilege);//TODO: Needs test case
+    // hiveAuthzStmtPrivMap.put(HiveOperation.ALTERINDEX_REBUILD, indexTablePrivilege);
 
 
     hiveAuthzStmtPrivMap.put(HiveOperation.ALTERTABLE_PROPERTIES, alterTablePrivilege);
@@ -328,7 +330,7 @@ public class HiveAuthzPrivilegesMap {
     hiveAuthzStmtPrivMap.put(HiveOperation.SHOW_TBLPROPERTIES, tableMetaDataPrivilege);
     hiveAuthzStmtPrivMap.put(HiveOperation.SHOW_CREATETABLE, tableMetaDataPrivilege);
     // SHOWFUNCTIONS
-    hiveAuthzStmtPrivMap.put(HiveOperation.SHOWINDEXES, tableMetaDataPrivilege);
+    // hiveAuthzStmtPrivMap.put(HiveOperation.SHOWINDEXES, tableMetaDataPrivilege);
     hiveAuthzStmtPrivMap.put(HiveOperation.SHOWPARTITIONS, tableMetaDataPrivilege);
     // SHOWLOCKS
     hiveAuthzStmtPrivMap.put(HiveOperation.EXPORT, tableExportPrivilege);

@@ -51,7 +51,8 @@ public class ActiveRoleSet {
   /**
    * Returns true if this active role set contains role. This can be the result
    * of either this role set implying all roles or containing role.
-   * @param role
+   *
+   * @param role role
    * @return true if this active role set contains role
    */
   public boolean containsRole(String role) {

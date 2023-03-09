@@ -18,18 +18,15 @@
 
 package org.apache.sentry.binding.metastore.messaging.json;
 
-import org.apache.hadoop.hive.metastore.messaging.AlterIndexMessage;
-import org.apache.hadoop.hive.metastore.messaging.CreateFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.CreateIndexMessage;
-import org.apache.hadoop.hive.metastore.messaging.DropFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.DropIndexMessage;
-import org.apache.hadoop.hive.metastore.messaging.InsertMessage;
-import org.apache.hadoop.hive.metastore.messaging.MessageDeserializer;
-import org.apache.hadoop.hive.metastore.messaging.json.JSONAlterIndexMessage;
+import org.apache.hadoop.hive.metastore.messaging.*;
+// import org.apache.hadoop.hive.metastore.messaging.AlterIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.CreateIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.DropIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.json.JSONAlterIndexMessage;
 import org.apache.hadoop.hive.metastore.messaging.json.JSONCreateFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.json.JSONCreateIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.json.JSONCreateIndexMessage;
 import org.apache.hadoop.hive.metastore.messaging.json.JSONDropFunctionMessage;
-import org.apache.hadoop.hive.metastore.messaging.json.JSONDropIndexMessage;
+// import org.apache.hadoop.hive.metastore.messaging.json.JSONDropIndexMessage;
 import org.apache.hadoop.hive.metastore.messaging.json.JSONInsertMessage;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -54,6 +51,11 @@ public class SentryJSONMessageDeserializer extends MessageDeserializer {
     } catch (Exception e) {
       throw new IllegalArgumentException("Could not construct SentryJSONCreateDatabaseMessage: ", e);
     }
+  }
+
+  @Override
+  public AlterDatabaseMessage getAlterDatabaseMessage(String s) {
+    return null;
   }
 
   /**
@@ -169,7 +171,9 @@ public class SentryJSONMessageDeserializer extends MessageDeserializer {
   }
 
   /**
-   * Method to de-serialize CreateIndexMessage instance.                                                                                                                                                   +   */
+   * Method to de-serialize CreateIndexMessage instance.
+   * */
+  /*
   @Override
   public CreateIndexMessage getCreateIndexMessage(String messageBody) {
     // Sentry does not need this message, but it needs to be implemented so that Hive can
@@ -180,10 +184,12 @@ public class SentryJSONMessageDeserializer extends MessageDeserializer {
       throw new IllegalArgumentException("Could not construct JSONCreateIndexMessage: ", e);
     }
   }
+  */
 
   /**
    * Method to de-serialize DropIndexMessage instance.
    */
+  /*
   @Override
   public DropIndexMessage getDropIndexMessage(String messageBody) {
     // Sentry does not need this message, but it needs to be implemented so that Hive can
@@ -194,10 +200,12 @@ public class SentryJSONMessageDeserializer extends MessageDeserializer {
       throw new IllegalArgumentException("Could not construct JSONDropIndexMessage: ", e);
     }
   }
+  */
 
   /**
    * Method to de-serialize AlterIndexMessage instance.
    */
+  /*
   @Override
   public AlterIndexMessage getAlterIndexMessage(String messageBody) {
     // Sentry does not need this message, but it needs to be implemented so that Hive can
@@ -208,6 +216,7 @@ public class SentryJSONMessageDeserializer extends MessageDeserializer {
       throw new IllegalArgumentException("Could not construct JSONAlterIndexMessage: ", e);
     }
   }
+  */
 
   /**
    * Method to de-serialize JSONInsertMessage instance.
@@ -221,6 +230,51 @@ public class SentryJSONMessageDeserializer extends MessageDeserializer {
     } catch (Exception e) {
       throw new IllegalArgumentException("Could not construct InsertMessage", e);
     }
+  }
+
+  @Override
+  public AddPrimaryKeyMessage getAddPrimaryKeyMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public AddForeignKeyMessage getAddForeignKeyMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public AddUniqueConstraintMessage getAddUniqueConstraintMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public AddNotNullConstraintMessage getAddNotNullConstraintMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public DropConstraintMessage getDropConstraintMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public OpenTxnMessage getOpenTxnMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public CommitTxnMessage getCommitTxnMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public AbortTxnMessage getAbortTxnMessage(String s) {
+    return null;
+  }
+
+  @Override
+  public AllocWriteIdMessage getAllocWriteIdMessage(String s) {
+    return null;
   }
 
   public static String serialize(Object object) {

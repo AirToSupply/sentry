@@ -89,6 +89,7 @@ public final class PubSub {
 
   /**
    * Public factory method to guarantee singleton
+   * @return return
    */
   public static synchronized PubSub getInstance() {
     if (instance != null) {
@@ -106,6 +107,9 @@ public final class PubSub {
 
   /**
    * Publish message on given topic. Message is optional.
+   *
+   * @param topic topic
+   * @param message message
    */
   public synchronized void publish(Topic topic, String message) {
     Preconditions.checkNotNull(topic, "Topic cannot be null");
@@ -130,6 +134,9 @@ public final class PubSub {
 
   /**
    * Subscribe to given topic.
+   *
+   * @param topic topic
+   * @param subscriber subscriber
    */
   public synchronized void subscribe(Topic topic, Subscriber subscriber) {
     Preconditions.checkNotNull(topic, "Topic cannot be null");
@@ -146,6 +153,9 @@ public final class PubSub {
 
   /**
    * Unsubscribe from given topic. If the last subscriber, remove the topic.
+   *
+   * @param topic topic
+   * @param subscriber subscriber
    */
   public synchronized void unsubscribe(Topic topic, Subscriber subscriber) {
     Preconditions.checkNotNull(topic, "Topic cannot be null");

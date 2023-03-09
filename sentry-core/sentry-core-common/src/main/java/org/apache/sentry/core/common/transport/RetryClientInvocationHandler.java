@@ -28,23 +28,6 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * The RetryClientInvocationHandler is a proxy class for handling thrift calls for non-pool
- * model. Currently only one client connection is allowed.
- * <p>
- * For every rpc call, if the client is not connected, it will first connect to one of the
- * sentry servers, and then do the thrift call to the connected sentry server, which will
- * execute the requested method and return back the response. If it is failed with connection
- * problem, it will close the current connection and retry (reconnect and resend the
- * thrift call) no more than rpcRetryTotal times. If the client is already connected, it
- * will reuse the existing connection, and do the thrift call.
- * <p>
- * During reconnection, invocatiaon handler will first cycle through all the configured sentry servers, and
- * then retry the whole server list no more than connectionFullRetryTotal times. In this
- * case, it won't introduce more latency when some server fails.
- * <p>
- */
-
 public final class RetryClientInvocationHandler extends SentryClientInvocationHandler {
   private static final Logger LOGGER =
     LoggerFactory.getLogger(RetryClientInvocationHandler.class);
@@ -54,7 +37,11 @@ public final class RetryClientInvocationHandler extends SentryClientInvocationHa
 
   /**
    * Initialize the sentry configurations, including rpc retry count and client connection
-   * configs for SentryPolicyServiceClientDefaultImpl
+   * configs for SentryPolicyServiceClientDefaultImpls
+   *
+   * @param conf conf
+   * @param clientObject clientObject
+   * @param transportConfig transportConfig
    */
   public RetryClientInvocationHandler(Configuration conf, SentryConnection clientObject,
                                       SentryClientTransportConfigInterface transportConfig) {
@@ -73,6 +60,12 @@ public final class RetryClientInvocationHandler extends SentryClientInvocationHa
    * resend the thrift call) no more than rpcRetryTotal times. Throw SentryUserException
    * if failed retry after rpcRetryTotal times.
    * if it is failed with other exception, method would just re-throw the exception.
+   *
+   * @param proxy proxy
+   * @param method method
+   * @param args args
+   * @return return
+   * @throws Exception exception
    */
   @Override
   public synchronized Object invokeImpl(Object proxy, Method method, Object[] args) throws Exception {

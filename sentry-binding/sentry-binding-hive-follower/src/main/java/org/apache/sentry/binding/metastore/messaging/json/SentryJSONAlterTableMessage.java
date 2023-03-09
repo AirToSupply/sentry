@@ -32,15 +32,15 @@ public class SentryJSONAlterTableMessage extends JSONAlterTableMessage {
   }
 
   public SentryJSONAlterTableMessage(String server, String servicePrincipal, Table tableObjBefore,
-      Table tableObjAfter, Long timestamp) {
-    this(server, servicePrincipal, tableObjBefore, tableObjAfter, timestamp,
+      Table tableObjAfter, boolean isTruncateOp, Long timestamp) {
+    this(server, servicePrincipal, tableObjBefore, tableObjAfter, isTruncateOp, timestamp,
         tableObjBefore.getSd().getLocation(), tableObjAfter.getSd().getLocation());
   }
 
   public SentryJSONAlterTableMessage(String server, String servicePrincipal,
-      Table tableObjBefore, Table tableObjAfter, Long timestamp, String oldLocation,
+      Table tableObjBefore, Table tableObjAfter, boolean isTruncateOp, Long timestamp, String oldLocation,
       String newLocation) {
-    super(server, servicePrincipal, tableObjBefore, tableObjAfter, timestamp);
+    super(server, servicePrincipal, tableObjBefore, tableObjAfter, isTruncateOp, timestamp);
     this.newLocation = newLocation;
     this.oldLocation = oldLocation;
   }

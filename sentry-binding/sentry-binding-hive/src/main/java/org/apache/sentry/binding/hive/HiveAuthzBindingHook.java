@@ -142,8 +142,8 @@ public class HiveAuthzBindingHook extends HiveAuthzBindingHookBase {
       case HiveParser.TOK_ALTERVIEW_PROPERTIES:
       case HiveParser.TOK_ALTERVIEW_RENAME:
       case HiveParser.TOK_ALTERVIEW:
-      case HiveParser.TOK_CREATEINDEX:
-      case HiveParser.TOK_DROPINDEX:
+      // case HiveParser.TOK_CREATEINDEX:
+      // case HiveParser.TOK_DROPINDEX:
       case HiveParser.TOK_LOCKTABLE:
       case HiveParser.TOK_UNLOCKTABLE:
         currTab = extractTable((ASTNode)ast.getFirstChildWithType(HiveParser.TOK_TABNAME));
@@ -151,10 +151,12 @@ public class HiveAuthzBindingHook extends HiveAuthzBindingHookBase {
         indexURI = extractTableLocation(ast);//As index location is captured using token HiveParser.TOK_TABLELOCATION
         isAlterViewAs = isAlterViewAsOperation(ast);
         break;
+      /*
       case HiveParser.TOK_ALTERINDEX_REBUILD:
         currTab = extractTable((ASTNode)ast.getChild(0)); //type is not TOK_TABNAME
         currDB = extractDatabase((ASTNode) ast.getChild(0));
         break;
+      */
       case HiveParser.TOK_SHOW_TABLESTATUS:
         currDB = extractDatabase((ASTNode)ast.getChild(0));
         int children = ast.getChildCount();
@@ -177,7 +179,7 @@ public class HiveAuthzBindingHook extends HiveAuthzBindingHookBase {
       case HiveParser.TOK_ALTERTABLE_ADDCOLS:
       case HiveParser.TOK_ALTERTABLE_REPLACECOLS:
       case HiveParser.TOK_SHOW_TBLPROPERTIES:
-      case HiveParser.TOK_SHOWINDEXES:
+      // case HiveParser.TOK_SHOWINDEXES:
       case HiveParser.TOK_SHOWPARTITIONS:
         //token name TOK_TABNAME is not properly set in this case
         currTab = extractTable((ASTNode)ast.getChild(0));

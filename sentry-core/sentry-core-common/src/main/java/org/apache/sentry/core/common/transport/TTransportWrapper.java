@@ -63,8 +63,8 @@ public final class TTransportWrapper implements Closeable {
   }
 
   /**
-   * Flush the underlying transport
-   * @throws TTransportException
+   *
+   * @throws TTransportException TTransportException
    */
   public void flush() throws TTransportException {
     transport.flush();

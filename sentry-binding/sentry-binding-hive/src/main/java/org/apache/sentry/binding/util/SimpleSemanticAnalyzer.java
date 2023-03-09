@@ -74,9 +74,11 @@ public class SimpleSemanticAnalyzer {
   /**
    * SHOW [FORMATTED] (INDEX|INDEXES) ON table_with_index [(FROM|IN) db_name];
    */
+  /*
   private static final String SHOW_INDEX_REGEX = "^SHOW\\s+" + "(FORMATTED\\s+)?"
       + "(INDEX|INDEXES)\\s+" + "ON\\s+" + "([A-Za-z0-9._]+)\\s*"
       + "((FROM|IN)\\s+([A-Za-z0-9_]+))?";
+   */
 
   /**
    * SHOW TBLPROPERTIES tblname;
@@ -103,8 +105,10 @@ public class SimpleSemanticAnalyzer {
   /**
    * ALTER INDEX index_name ON table_name [PARTITION partition_spec] REBUILD;
    */
+  /*
   private static final String ALTER_INDEX_REGEX = "^ALTER\\s+" + "INDEX\\s+"
       + "([A-Za-z0-9_]+)\\s+" + "ON\\s" + "([A-Za-z0-9._]+)";
+   */
 
   /**
    * CREATE FUNCTION [db_name.]function_name AS class_name [USING JAR|FILE|ARCHIVE 'file_uri' [,
@@ -188,8 +192,8 @@ public class SimpleSemanticAnalyzer {
     OP_REGEX_MAP.put(HiveOperation.ALTERTBLPART_SKEWED_LOCATION, ALTER_TABLE_REGEX);
     OP_REGEX_MAP.put(HiveOperation.ALTERVIEW_PROPERTIES, ALTER_VIEW_REGEX);
     OP_REGEX_MAP.put(HiveOperation.MSCK, MSCK_REGEX);
-    OP_REGEX_MAP.put(HiveOperation.ALTERINDEX_REBUILD, ALTER_INDEX_REGEX);
-    OP_REGEX_MAP.put(HiveOperation.ALTERINDEX_PROPS, ALTER_INDEX_REGEX);
+    // OP_REGEX_MAP.put(HiveOperation.ALTERINDEX_REBUILD, ALTER_INDEX_REGEX);
+    // OP_REGEX_MAP.put(HiveOperation.ALTERINDEX_PROPS, ALTER_INDEX_REGEX);
     OP_REGEX_MAP.put(HiveOperation.LOCKDB, LOCKDB);
     OP_REGEX_MAP.put(HiveOperation.UNLOCKDB, UNLOCKDB);
     OP_REGEX_MAP.put(HiveOperation.LOCKTABLE, LOCKTABLE);
@@ -248,17 +252,19 @@ public class SimpleSemanticAnalyzer {
         // MSCK
       case MSCK:
         // alter index
-      case ALTERINDEX_REBUILD:
-      case ALTERINDEX_PROPS:
+      // case ALTERINDEX_REBUILD:
+      // case ALTERINDEX_PROPS:
       case LOCKTABLE:
       case UNLOCKTABLE:
       case SHOWCOLUMNS:
       case TRUNCATETABLE:
         parseTableMeta(cmd, OP_REGEX_MAP.get(hiveOp));
         break;
+      /*
       case SHOWINDEXES:
         parseShowIndex(cmd, SHOW_INDEX_REGEX);
         break;
+      */
       case CREATEFUNCTION:
         parseFunction(cmd, CREATE_FUNCTION_REGEX);
         break;
@@ -329,6 +335,7 @@ public class SimpleSemanticAnalyzer {
     }
   }
 
+  /*
   private void parseShowIndex(String cmd, String regex) throws HiveAuthzPluginException {
     Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     Matcher matcher = pattern.matcher(cmd);
@@ -345,6 +352,7 @@ public class SimpleSemanticAnalyzer {
       throw new HiveAuthzPluginException("this command " + cmd + " does not match the show index grammar");
     }
   }
+  */
 
   private void parseFunction(String cmd, String regex) throws HiveAuthzPluginException {
     Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);

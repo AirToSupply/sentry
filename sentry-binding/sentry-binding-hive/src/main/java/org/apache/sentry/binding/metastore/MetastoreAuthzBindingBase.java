@@ -315,8 +315,8 @@ public abstract class MetastoreAuthzBindingBase extends MetaStorePreEventListene
 	    if (!StringUtils.isEmpty(partitionLocation)) {
 	      String tableLocation = context
 	          .getHandler()
-	          .get_table(mapiPart.getDbName(),
-	              mapiPart.getTableName()).getSd().getLocation();
+	          .get_table_core(mapiPart.getCatName(), mapiPart.getDbName(), mapiPart.getTableName())
+              .getSd().getLocation();
 	      String uriPath;
 	      try {
 	        uriPath = PathUtils.parseDFSURI(warehouseDir, mapiPart
@@ -370,8 +370,10 @@ public abstract class MetastoreAuthzBindingBase extends MetaStorePreEventListene
     Partition partition = context.getNewPartition();
     String partitionLocation = getSdLocation(partition.getSd());
     if (!StringUtils.isEmpty(partitionLocation)) {
-      String tableLocation = context.getHandler().get_table(
-          partition.getDbName(), partition.getTableName()).getSd().getLocation();
+      String tableLocation = context
+          .getHandler()
+          .get_table_core(partition.getCatName(), partition.getDbName(), partition.getTableName())
+          .getSd().getLocation();
 
       String uriPath;
       try {

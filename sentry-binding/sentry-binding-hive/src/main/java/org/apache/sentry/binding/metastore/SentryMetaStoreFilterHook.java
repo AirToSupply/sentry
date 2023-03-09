@@ -21,13 +21,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.MetaStoreFilterHook;
-import org.apache.hadoop.hive.metastore.api.Database;
-import org.apache.hadoop.hive.metastore.api.Index;
-import org.apache.hadoop.hive.metastore.api.MetaException;
-import org.apache.hadoop.hive.metastore.api.NoSuchObjectException;
-import org.apache.hadoop.hive.metastore.api.Partition;
-import org.apache.hadoop.hive.metastore.api.PartitionSpec;
-import org.apache.hadoop.hive.metastore.api.Table;
+import org.apache.hadoop.hive.metastore.api.*;
+// import org.apache.hadoop.hive.metastore.api.Index;
 import org.apache.hadoop.hive.ql.plan.HiveOperation;
 import org.apache.hadoop.hive.ql.session.SessionState;
 import org.apache.sentry.binding.hive.authz.HiveAuthzBindingHookBase;
@@ -50,6 +45,16 @@ public class SentryMetaStoreFilterHook implements MetaStoreFilterHook {
   }
 
   @Override
+  public Catalog filterCatalog(Catalog catalog) throws MetaException {
+    return MetaStoreFilterHook.super.filterCatalog(catalog);
+  }
+
+  @Override
+  public List<String> filterCatalogs(List<String> catalogs) throws MetaException {
+    return MetaStoreFilterHook.super.filterCatalogs(catalogs);
+  }
+
+  @Override
   public List<String> filterDatabases(List<String> dbList) {
     return filterDb(dbList);
   }
@@ -61,8 +66,13 @@ public class SentryMetaStoreFilterHook implements MetaStoreFilterHook {
   }
 
   @Override
-  public List<String> filterTableNames(String dbName, List<String> tableList) {
+  public List<String> filterTableNames(String catName, String dbName, List<String> tableList) {
     return filterTab(dbName, tableList);
+  }
+
+  @Override
+  public List<TableMeta> filterTableMetas(List<TableMeta> list) throws MetaException {
+    return null;
   }
 
   @Override
@@ -93,26 +103,32 @@ public class SentryMetaStoreFilterHook implements MetaStoreFilterHook {
   }
 
   @Override
-  public List<String> filterPartitionNames(String dbName, String tblName,
+  public List<String> filterPartitionNames(String catName, String dbName, String tblName,
       List<String> partitionNames) {
     return partitionNames;
   }
 
+  /*
   @Override
   public Index filterIndex(Index index) throws NoSuchObjectException {
     return index;
   }
+  */
 
+  /*
   @Override
   public List<String> filterIndexNames(String dbName, String tblName,
       List<String> indexList) {
     return indexList;
   }
+  */
 
+  /*
   @Override
   public List<Index> filterIndexes(List<Index> indexeList) {
     return indexeList;
   }
+  */
 
   /**
    * Invoke Hive database filtering that removes the entries which use has no

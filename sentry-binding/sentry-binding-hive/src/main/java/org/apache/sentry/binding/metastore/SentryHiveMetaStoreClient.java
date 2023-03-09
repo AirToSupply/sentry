@@ -53,12 +53,12 @@ public class SentryHiveMetaStoreClient extends HiveMetaStoreClient implements
   }
 
   @Override
-  public List<String> getDatabases(String databasePattern) throws MetaException {
+  public List<String> getDatabases(String databasePattern) throws TException {
     return filterDatabases(super.getDatabases(databasePattern));
   }
 
   @Override
-  public List<String> getAllDatabases() throws MetaException {
+  public List<String> getAllDatabases() throws TException {
     return filterDatabases(super.getAllDatabases());
   }
 
@@ -103,7 +103,8 @@ public class SentryHiveMetaStoreClient extends HiveMetaStoreClient implements
    * Invoke Hive table filtering that removes the entries which use has no
    * privileges to access
    *
-   * @param dbList
+   * @param dbName
+   * @param tabList
    * @return
    * @throws MetaException
    */

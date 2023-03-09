@@ -29,6 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars;
 import org.apache.hadoop.hive.ql.Driver;
+import org.apache.hadoop.hive.ql.QueryState;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.processors.CommandProcessorResponse;
 import org.apache.hadoop.hive.ql.session.SessionState;
@@ -332,7 +333,13 @@ public class SentryConfigTool {
     // setup Hive driver
     SessionState session = new SessionState(getHiveConf());
     SessionState.start(session);
-    Driver driver = new Driver(session.getConf(), getUser());
+    // Driver driver = new Driver(session.getConf(), getUser());
+    Driver driver = new Driver(
+          new QueryState.Builder()
+              .withGenerateNewQueryId(true)
+              .withHiveConf(session.getConf())
+              .build(),
+          getUser());
 
     // compile the query
     CommandProcessorResponse compilerStatus = driver

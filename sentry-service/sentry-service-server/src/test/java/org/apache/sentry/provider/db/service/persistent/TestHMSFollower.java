@@ -73,6 +73,7 @@ import javax.security.auth.login.LoginException;
 public class TestHMSFollower {
 
   private final static String hiveInstance = "server2";
+  private static final boolean IS_TRUNCATE_OP = Boolean.FALSE;
   private final static Configuration configuration = new Configuration();
   private final SentryJSONMessageFactory messageFactory = new SentryJSONMessageFactory();
   private final SentryStore sentryStore = Mockito.mock(SentryStore.class);
@@ -809,8 +810,8 @@ public class TestHMSFollower {
         EventMessage.EventType.ALTER_TABLE.toString(),
         messageFactory.buildAlterTableMessage(
             new Table(tableName, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
-            new Table(newTableName, newDbName, null, 0, 0, 0, sd, null, null, null, null, null))
-            .toString());
+            new Table(newTableName, newDbName, null, 0, 0, 0, sd, null, null, null, null, null),
+            IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(newDbName);
     notificationEvent.setTableName(newTableName);
     List<NotificationEvent> events = new ArrayList<>();
@@ -915,7 +916,7 @@ public class TestHMSFollower {
     // This is an invalid event and should be processed by sentry store.
     // Event Id should be explicitly persisted using persistLastProcessedNotificationID
     notificationEvent = new NotificationEvent(inputEventId, 0, EventType.ALTER_PARTITION.toString(),
-        messageFactory.buildAlterPartitionMessage(table, partition, partition).toString());
+        messageFactory.buildAlterPartitionMessage(table, partition, partition, IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(dbName);
     notificationEvent.setTableName(tableName1);
     events.add(notificationEvent);
@@ -933,7 +934,7 @@ public class TestHMSFollower {
     Partition updatedPartition = new Partition(partition);
     updatedPartition.setSd(sd);
     notificationEvent = new NotificationEvent(inputEventId, 0, EventType.ALTER_PARTITION.toString(),
-      messageFactory.buildAlterPartitionMessage(table, partition, updatedPartition).toString());
+      messageFactory.buildAlterPartitionMessage(table, partition, updatedPartition, IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(dbName);
     notificationEvent.setTableName(tableName1);
     events.add(notificationEvent);
@@ -1033,8 +1034,8 @@ public class TestHMSFollower {
         EventMessage.EventType.ALTER_TABLE.toString(),
         messageFactory.buildAlterTableMessage(
             new Table(tableName1, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
-            new Table(tableName1, dbName, null, 0, 0, 0, sd, null, null, null, null, null))
-            .toString());
+            new Table(tableName1, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
+            IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(dbName);
     notificationEvent.setTableName(tableName1);
     events = new ArrayList<>();
@@ -1270,8 +1271,8 @@ public class TestHMSFollower {
         EventMessage.EventType.ALTER_TABLE.toString(),
         messageFactory.buildAlterTableMessage(
             new Table(tableName, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
-            new Table(newTableName, newDbName, null, 0, 0, 0, sd, null, null, null, null, null))
-            .toString());
+            new Table(newTableName, newDbName, null, 0, 0, 0, sd, null, null, null, null, null),
+            IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(newDbName);
     notificationEvent.setTableName(newTableName);
     List<NotificationEvent> events = new ArrayList<>();

@@ -115,6 +115,10 @@ public final class ThriftUtil {
    * Utility function for parsing host and port strings. Expected form should be
    * (host:port). The hostname could be in ipv6 style. If port is not specified,
    * defaultPort will be used.
+   *
+   * @param address address
+   * @param defaultPort defaultPort
+   * @return return
    */
   public static HostAndPort parseAddress(String address, int defaultPort) {
     return HostAndPort.fromString(address).withDefaultPort(defaultPort);

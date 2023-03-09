@@ -18,10 +18,7 @@
 
 package org.apache.sentry.service.thrift;
 
-import org.apache.hadoop.hive.metastore.api.NotificationEvent;
-import org.apache.hadoop.hive.metastore.api.Partition;
-import org.apache.hadoop.hive.metastore.api.StorageDescriptor;
-import org.apache.hadoop.hive.metastore.api.Table;
+import org.apache.hadoop.hive.metastore.api.*;
 import org.apache.hadoop.hive.metastore.messaging.MessageDeserializer;
 import org.apache.sentry.binding.metastore.messaging.json.SentryJSONAddPartitionMessage;
 import org.apache.sentry.binding.metastore.messaging.json.SentryJSONAlterPartitionMessage;
@@ -53,6 +50,7 @@ public class TestFullUpdateModifier {
   private static final String AUTH = DB.toLowerCase() + "." + TABLE.toLowerCase();
   private static final String PATH = "foo/bar";
   private static final String LOCATION = uri(PATH);
+  private static final boolean IS_TRUNCATE_OP = Boolean.FALSE;
 
   private static final Table TABLE_OBJ = new Table(TABLE, DB, "", 0, 0, 0,
       buildStorageDescriptor(LOCATION), null, null, "", "", "");
@@ -98,8 +96,10 @@ public class TestFullUpdateModifier {
     NotificationEvent event = new NotificationEvent(0, 0, CREATE_DATABASE.toString(), "");
     MessageDeserializer deserializer = Mockito.mock(SentryJSONMessageDeserializer.class);
 
+    Database db = new Database();
+    db.setName(DB);
     SentryJSONCreateDatabaseMessage message =
-            new SentryJSONCreateDatabaseMessage(SERVER, PRINCIPAL, DB, 0L, LOCATION);
+            new SentryJSONCreateDatabaseMessage(SERVER, PRINCIPAL, db, 0L, LOCATION);
     Mockito.when(deserializer.getCreateDatabaseMessage("")).thenReturn(message);
     FullUpdateModifier.applyEvent(update, event, deserializer);
     Map<String, Set<String>> expected = new HashMap<>();
@@ -312,7 +312,7 @@ public class TestFullUpdateModifier {
 
     SentryJSONAlterPartitionMessage message =
             new SentryJSONAlterPartitionMessage(SERVER, PRINCIPAL, TABLE_OBJ,
-                    partitionObjBefore, partitionObjAfter, 0L);
+                    partitionObjBefore, partitionObjAfter, IS_TRUNCATE_OP, 0L);
 
     Mockito.when(deserializer.getAlterPartitionMessage("")).thenReturn(message);
     FullUpdateModifier.applyEvent(update, event, deserializer);
@@ -340,7 +340,7 @@ public class TestFullUpdateModifier {
     MessageDeserializer deserializer = Mockito.mock(SentryJSONMessageDeserializer.class);
 
     SentryJSONAlterTableMessage message =
-            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, TABLE_OBJ, 0L);
+            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, TABLE_OBJ, IS_TRUNCATE_OP, 0L);
 
     Mockito.when(deserializer.getAlterTableMessage("")).thenReturn(message);
     FullUpdateModifier.applyEvent(update, event, deserializer);
@@ -371,7 +371,7 @@ public class TestFullUpdateModifier {
     MessageDeserializer deserializer = Mockito.mock(SentryJSONMessageDeserializer.class);
 
     SentryJSONAlterTableMessage message =
-            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, TABLE_OBJ, 0L);
+            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, TABLE_OBJ, IS_TRUNCATE_OP, 0L);
 
     Mockito.when(deserializer.getAlterTableMessage("")).thenReturn(message);
     FullUpdateModifier.applyEvent(update, event, deserializer);
@@ -403,7 +403,7 @@ public class TestFullUpdateModifier {
     MessageDeserializer deserializer = Mockito.mock(SentryJSONMessageDeserializer.class);
 
     SentryJSONAlterTableMessage message =
-            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, TABLE_OBJ, 0L);
+            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, TABLE_OBJ, IS_TRUNCATE_OP, 0L);
 
     Mockito.when(deserializer.getAlterTableMessage("")).thenReturn(message);
     FullUpdateModifier.applyEvent(update, event, deserializer);
@@ -436,7 +436,7 @@ public class TestFullUpdateModifier {
 
     Table tableWithNewLocation = buildTable(DB, TABLE, newLocation);
     SentryJSONAlterTableMessage message =
-            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, tableWithNewLocation, 0L);
+            new SentryJSONAlterTableMessage(SERVER, PRINCIPAL, TABLE_OBJ, tableWithNewLocation, IS_TRUNCATE_OP, 0L);
 
     Mockito.when(deserializer.getAlterTableMessage("")).thenReturn(message);
     FullUpdateModifier.applyEvent(update, event, deserializer);

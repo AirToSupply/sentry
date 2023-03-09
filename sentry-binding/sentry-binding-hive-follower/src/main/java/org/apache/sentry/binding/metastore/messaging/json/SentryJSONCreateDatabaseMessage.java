@@ -18,6 +18,7 @@
 
 package org.apache.sentry.binding.metastore.messaging.json;
 
+import org.apache.hadoop.hive.metastore.api.Database;
 import org.apache.hadoop.hive.metastore.messaging.json.JSONCreateDatabaseMessage;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -28,7 +29,7 @@ public class SentryJSONCreateDatabaseMessage extends JSONCreateDatabaseMessage {
   public SentryJSONCreateDatabaseMessage() {
   }
 
-  public SentryJSONCreateDatabaseMessage(String server, String servicePrincipal, String db, Long timestamp, String location) {
+  public SentryJSONCreateDatabaseMessage(String server, String servicePrincipal, Database db, Long timestamp, String location) {
     super(server, servicePrincipal, db, timestamp);
     this.location = location;
   }

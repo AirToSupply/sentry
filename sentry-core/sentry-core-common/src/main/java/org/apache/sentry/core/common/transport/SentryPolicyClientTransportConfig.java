@@ -56,7 +56,7 @@ public final class SentryPolicyClientTransportConfig
   }
 
   /**
-   * @throws MissingConfigurationException
+   * @throws MissingConfigurationException missingConfigurationException
    */
   @Override
   public String getSentryPrincipal(Configuration conf) {
@@ -68,7 +68,10 @@ public final class SentryPolicyClientTransportConfig
   }
 
   /**
-   * @throws MissingConfigurationException
+   * @throws MissingConfigurationException missingConfigurationException
+   *
+   * @param conf configuration
+   * @return return
    */
   @Override
   public String getSentryServerRpcAddress(Configuration conf) {

@@ -47,6 +47,7 @@ public class TestNotificationProcessor {
 
   private static final SentryStore sentryStore = Mockito.mock(SentryStore.class);
   private final static String hiveInstance = "server2";
+  private static final boolean IS_TRUNCATE_OP = Boolean.FALSE;
   private final static Configuration conf = new Configuration();
   private final SentryJSONMessageFactory messageFactory = new SentryJSONMessageFactory();
   private NotificationProcessor notificationProcessor;
@@ -316,8 +317,8 @@ public class TestNotificationProcessor {
         EventMessage.EventType.ALTER_TABLE.toString(),
         messageFactory.buildAlterTableMessage(
             new Table(tableName, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
-            new Table(newTableName, newDbName, null, 0, 0, 0, sd, null, null, null, null, null))
-            .toString());
+            new Table(newTableName, newDbName, null, 0, 0, 0, sd, null, null, null, null, null),
+            IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(newDbName);
     notificationEvent.setTableName(newTableName);
 
@@ -369,8 +370,8 @@ public class TestNotificationProcessor {
         EventMessage.EventType.ALTER_TABLE.toString(),
         messageFactory.buildAlterTableMessage(
             new Table(tableName, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
-            new Table(newTableName, newDbName, null, 0, 0, 0, new_sd, null, null, null, null, null))
-            .toString());
+            new Table(newTableName, newDbName, null, 0, 0, 0, new_sd, null, null, null, null, null),
+            IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(newDbName);
     notificationEvent.setTableName(newTableName);
 
@@ -448,8 +449,8 @@ public class TestNotificationProcessor {
         EventMessage.EventType.ALTER_TABLE.toString(),
         messageFactory.buildAlterTableMessage(
             new Table(tableName1, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
-            new Table(tableName1, dbName, null, 0, 0, 0, sd, null,
-                null, null, null, null)).toString());
+            new Table(tableName1, dbName, null, 0, 0, 0, sd, null, null, null, null, null),
+            IS_TRUNCATE_OP).toString());
     notificationEvent.setDbName(dbName);
     notificationEvent.setTableName(tableName1);
     inputEventId += 1;

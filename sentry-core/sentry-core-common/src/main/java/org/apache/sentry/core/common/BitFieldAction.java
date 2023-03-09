@@ -34,7 +34,7 @@ public class BitFieldAction implements Action {
   }
   /**
    * Return true if this action implies that action.
-   * @param that
+   * @param that that
    */
   public boolean implies(BitFieldAction that) {
     if (that != null) {

@@ -14,7 +14,7 @@
  */
 package org.apache.sentry.binding.hive.authz;
 
-import static org.apache.hadoop.hive.metastore.MetaStoreUtils.DEFAULT_DATABASE_NAME;
+import static org.apache.hadoop.hive.metastore.Warehouse.DEFAULT_DATABASE_NAME;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -103,29 +103,55 @@ public class DefaultSentryValidator extends SentryHiveAuthorizationValidator {
       HiveOperation.UNLOCKDB);
 
   // all operations need to extend at Table scope
-  private static final Set<HiveOperation> EX_TB_ALL = Sets.newHashSet(HiveOperation.DROPTABLE,
-      HiveOperation.DROPVIEW, HiveOperation.DESCTABLE, HiveOperation.SHOW_TBLPROPERTIES,
-      HiveOperation.SHOWINDEXES, HiveOperation.ALTERTABLE_PROPERTIES,
-      HiveOperation.ALTERTABLE_SERDEPROPERTIES, HiveOperation.ALTERTABLE_CLUSTER_SORT,
-      HiveOperation.ALTERTABLE_FILEFORMAT, HiveOperation.ALTERTABLE_TOUCH,
-      HiveOperation.ALTERTABLE_ADDCOLS, HiveOperation.ALTERTABLE_REPLACECOLS,
-      HiveOperation.ALTERTABLE_RENAMEPART, HiveOperation.ALTERTABLE_ARCHIVE,
-      HiveOperation.ALTERTABLE_UNARCHIVE, HiveOperation.ALTERTABLE_SERIALIZER,
-      HiveOperation.ALTERTABLE_MERGEFILES, HiveOperation.ALTERTABLE_SKEWED,
-      HiveOperation.ALTERTABLE_DROPPARTS, HiveOperation.ALTERTABLE_ADDPARTS,
-      HiveOperation.ALTERTABLE_RENAME, HiveOperation.ALTERTABLE_LOCATION,
-      HiveOperation.ALTERVIEW_PROPERTIES, HiveOperation.ALTERPARTITION_FILEFORMAT,
-      HiveOperation.ALTERPARTITION_SERIALIZER, HiveOperation.ALTERPARTITION_MERGEFILES,
-      HiveOperation.ALTERPARTITION_LOCATION, HiveOperation.ALTERTBLPART_SKEWED_LOCATION,
-      HiveOperation.MSCK, HiveOperation.ALTERINDEX_REBUILD, HiveOperation.LOCKTABLE,
-      HiveOperation.UNLOCKTABLE, HiveOperation.SHOWCOLUMNS, HiveOperation.SHOW_TABLESTATUS,
-      HiveOperation.LOAD, HiveOperation.TRUNCATETABLE);
+  private static final Set<HiveOperation> EX_TB_ALL = Sets.newHashSet(
+      HiveOperation.DROPTABLE,
+      HiveOperation.DROPVIEW,
+      HiveOperation.DESCTABLE,
+      HiveOperation.SHOW_TBLPROPERTIES,
+      // HiveOperation.SHOWINDEXES,
+      HiveOperation.ALTERTABLE_PROPERTIES,
+      HiveOperation.ALTERTABLE_SERDEPROPERTIES,
+      HiveOperation.ALTERTABLE_CLUSTER_SORT,
+      HiveOperation.ALTERTABLE_FILEFORMAT,
+      HiveOperation.ALTERTABLE_TOUCH,
+      HiveOperation.ALTERTABLE_ADDCOLS,
+      HiveOperation.ALTERTABLE_REPLACECOLS,
+      HiveOperation.ALTERTABLE_RENAMEPART,
+      HiveOperation.ALTERTABLE_ARCHIVE,
+      HiveOperation.ALTERTABLE_UNARCHIVE,
+      HiveOperation.ALTERTABLE_SERIALIZER,
+      HiveOperation.ALTERTABLE_MERGEFILES,
+      HiveOperation.ALTERTABLE_SKEWED,
+      HiveOperation.ALTERTABLE_DROPPARTS,
+      HiveOperation.ALTERTABLE_ADDPARTS,
+      HiveOperation.ALTERTABLE_RENAME,
+      HiveOperation.ALTERTABLE_LOCATION,
+      HiveOperation.ALTERVIEW_PROPERTIES,
+      HiveOperation.ALTERPARTITION_FILEFORMAT,
+      HiveOperation.ALTERPARTITION_SERIALIZER,
+      HiveOperation.ALTERPARTITION_MERGEFILES,
+      HiveOperation.ALTERPARTITION_LOCATION,
+      HiveOperation.ALTERTBLPART_SKEWED_LOCATION,
+      HiveOperation.MSCK,
+      // HiveOperation.ALTERINDEX_REBUILD,
+      HiveOperation.LOCKTABLE,
+      HiveOperation.UNLOCKTABLE,
+      HiveOperation.SHOWCOLUMNS,
+      HiveOperation.SHOW_TABLESTATUS,
+      HiveOperation.LOAD,
+      HiveOperation.TRUNCATETABLE);
   // input operations need to extend at Table scope
-  private static final Set<HiveOperation> EX_TB_INPUT = Sets.newHashSet(HiveOperation.DROPTABLE,
-      HiveOperation.DROPVIEW, HiveOperation.SHOW_TBLPROPERTIES, HiveOperation.SHOWINDEXES,
-      HiveOperation.ALTERINDEX_REBUILD, HiveOperation.LOCKTABLE, HiveOperation.UNLOCKTABLE,
+  private static final Set<HiveOperation> EX_TB_INPUT = Sets.newHashSet(
+      HiveOperation.DROPTABLE,
+      HiveOperation.DROPVIEW,
+      HiveOperation.SHOW_TBLPROPERTIES,
+      // HiveOperation.SHOWINDEXES,
+      // HiveOperation.ALTERINDEX_REBUILD,
+      HiveOperation.LOCKTABLE,
+      HiveOperation.UNLOCKTABLE,
       HiveOperation.SHOW_TABLESTATUS);
-  private static final Set<HiveOperation> META_TB_INPUT = Sets.newHashSet(HiveOperation.DESCTABLE,
+  private static final Set<HiveOperation> META_TB_INPUT = Sets.newHashSet(
+      HiveOperation.DESCTABLE,
       HiveOperation.SHOWCOLUMNS);
 
   /**

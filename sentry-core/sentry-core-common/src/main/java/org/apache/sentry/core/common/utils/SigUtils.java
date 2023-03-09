@@ -89,8 +89,6 @@ public final class SigUtils {
    *
    * Multiple listeners per specific signal are supported but execution order is indeterminate.
    *
-   * @NotNull sigName
-   * @NotNull sigListener
    * @param sigName signal name, as in UNIX "kill" command, e.g. INT, USR1, etc, without "SIG" prefix
    * @param sigListener signal notification callback object
    * @throws IllegalArgumentException if invalid signal name or a signal is already handled by OS or JVM

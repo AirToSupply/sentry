@@ -43,6 +43,12 @@ public abstract class SentryClientInvocationHandler implements InvocationHandler
 
   /**
    * Subclass should implement this method for special function
+   *
+   * @param proxy proxy
+   * @param method method
+   * @param args args
+   * @return return
+   * @throws Exception exception
    */
   abstract public Object invokeImpl(Object proxy, Method method, Object[] args) throws Exception;
 

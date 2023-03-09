@@ -32,11 +32,10 @@ public final class Version {
   //  * Only add above this comment
 
   /**
-   * Parse a version number of the form {@code "major.minor.bugfix.prerelease"}.
    *
-   * Part {@code ".bugfix"} and part {@code ".prerelease"} are optional.
-   * Note that this is forwards compatible: the parsed version does not have to exist as
-   * a constant.
+   * @param version version
+   * @return return
+   * @throws ParseException ParseException
    */
   public static Version parse(String version) throws ParseException {
 
@@ -121,11 +120,10 @@ public final class Version {
   }
 
   /**
-   * Parse the given version number as a constant or dot based version.
-   * <p>This method allows to use {@code "SENTRY_X_Y"} constant names,
-   * or version numbers in the format {@code "x.y.z"}.
    *
-   * @lucene.internal
+   * @param version version
+   * @return return
+   * @throws ParseException ParseException
    */
   public static Version parseLeniently(String version) throws ParseException {
     String versionOrig = version;
@@ -148,9 +146,6 @@ public final class Version {
     }
   }
 
-  /** Returns a new version based on raw numbers
-   *
-   *  @lucene.internal */
   public static Version fromBits(int major, int minor, int bugfix) {
     return new Version(major, minor, bugfix);
   }

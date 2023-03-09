@@ -30,6 +30,8 @@ import com.google.common.net.HostAndPort;
 public interface TransportFactory {
   /**
    * Connect to the endpoint and return a connected Thrift transport.
+   *
+   * @param endpoint endpoint
    * @return Connection to the endpoint
    * @throws Exception if can't establish connection
    */
