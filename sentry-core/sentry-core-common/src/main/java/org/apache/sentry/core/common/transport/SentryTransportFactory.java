@@ -85,7 +85,7 @@ public final class SentryTransportFactory implements TransportFactory {
    */
   @Override
   public TTransportWrapper getTransport(HostAndPort endpoint) throws Exception {
-    return new TTransportWrapper(connectToServer(new InetSocketAddress(endpoint.getHostText(),
+    return new TTransportWrapper(connectToServer(new InetSocketAddress(endpoint.getHost(),
       endpoint.getPort())),
       endpoint);
   }

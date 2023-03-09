@@ -20,6 +20,8 @@ package org.apache.sentry.binding.metastore;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.security.auth.login.LoginException;
@@ -83,20 +85,24 @@ public class SentrySyncHMSNotificationsPostEventListener extends MetaStoreEventL
     super(config);
 
     /*
-    LOGGER.error("-----------------------------------");
-    LOGGER.error(config.getClass().getName());
-    LOGGER.error(HiveConf.class.getName());
-    LOGGER.error("-----------------------------------");
-    */
-
-    /*
     if (!(config instanceof HiveConf)) {
       String error = "Could not initialize Plugin - Configuration is not an instanceof HiveConf";
       LOGGER.error(error);
       throw new RuntimeException(error);
-    }*/
+    }
+    */
 
-    authzConf = HiveAuthzConf.getAuthzConf((HiveConf) config);
+    HiveConf conf = new HiveConf();
+
+    Iterator<Map.Entry<String, String>> iterator = config.iterator();
+
+    while (iterator.hasNext()) {
+      Map.Entry<String, String> item = iterator.next();
+      conf.set(item.getKey(), item.getValue());
+    }
+
+    // authzConf = HiveAuthzConf.getAuthzConf((HiveConf) config);
+    authzConf = HiveAuthzConf.getAuthzConf(conf);
     serverName = getServerName();
   }
 

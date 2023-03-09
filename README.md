@@ -34,3 +34,7 @@ To build a distribution, run:
 mvn install
 
 The final Sentry distribution artifacts will be in $project/sentry-dist/target/.
+
+Package to assembly, run:
+
+mvn clean install -Pdist -Dmaven.test.skip=true
